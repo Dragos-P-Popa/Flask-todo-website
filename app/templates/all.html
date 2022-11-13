@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="heading">All assignments</h1>
+<div id="accordion">
+    {%for i in range(0, len)%}
+    <div class="card shadow">
+        <div class="card-header" id="heading{{assignments[i].id}}">
+          <h5 class="mb-0">
+            {% if assignments[i].status == "complete" %}
+                <input type="checkbox" id="{{assignments[i].id}}" checked="true" disabled="true" aria-label="Checkbox for following text input">
+            {% else %}
+                <input type="checkbox" id="{{assignments[i].id}}" aria-label="Checkbox for following text input">
+            {% endif %}          
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{assignments[i].id}}" aria-expanded="true" aria-controls="collapse{{assignments[i].id}}">
+                {{assignments[i].title}} ⌄
+            </button>
+
+          </h5>
+        </div>
+    
+        <div id="collapse{{assignments[i].id}}" class="collapse hide" aria-labelledby="heading{{assignments[i].id}}" data-parent="#accordion">
+          <div class="card-body">
+            <u><p>Deadline:</u>  {{assignments[i].date}}</p>
+            <u><p>Module Code:</u>  {{assignments[i].module}}</p>
+            {{assignments[i].notes}}
+         </div>  
+        </div>
+      </div>
+
+      <br>
+    {%endfor%}
+</div>
+
+<script>
+    //Callback code
+    //When a checkbox is pressed it will 
+    //send a POST request to '/' which will
+    //update the assignment in the DB using
+    //the assignments ID
+document.querySelector('#accordion').onclick = function(ev) {
+  if(ev.target.value) {
+    console.log(ev.target.checked, ev.target.id);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/mark', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+        value: ev.target.id
+    }));
+
+    ev.target.disabled = true;
+  }
+}
+</script>
+
+
+{% endblock %}

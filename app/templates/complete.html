@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="heading">Complete assignments</h1>
+<div id="accordion">
+    {%for i in range(0, len)%}
+
+    <div class="card shadow">
+        <div class="card-header" id="heading{{assignments[i].id}}">
+          <h5 class="mb-0">
+              <input type="checkbox" checked="true" disabled="true" aria-label="Checkbox for following text input">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{assignments[i].id}}" aria-expanded="true" aria-controls="collapse{{assignments[i].id}}">
+                {{assignments[i].title}} ⌄
+            </button>
+          </h5>
+        </div>
+    
+        <div id="collapse{{assignments[i].id}}" class="collapse hide" aria-labelledby="heading{{assignments[i].id}}" data-parent="#accordion">
+          <div class="card-body">
+            <u><p>Deadline:</u>  {{assignments[i].date}}</p>
+            <u><p>Module Code:</u>  {{assignments[i].module}}</p>
+            {{assignments[i].notes}}
+         </div>  
+        </div>
+      </div>
+
+      <br>
+{%endfor%}
+{% endblock %}

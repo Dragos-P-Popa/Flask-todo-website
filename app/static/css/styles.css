@@ -1,0 +1,13 @@
+html, body {
+    overflow: auto;
+    height: 100%;
+    font-family: 'Satisfy', serif;
+}
+
+.heading {
+    align-self: center;
+    padding-bottom: 50px;
+    text-decoration: underline;
+}
+
+a { color: inherit; } 
